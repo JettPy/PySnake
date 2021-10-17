@@ -74,9 +74,11 @@ class Game:
         self._window.onkeypress(self._lose, 'r')
 
     def _lose(self):
-        self._window.bgcolor(LOSE_COLOR)
-        time.sleep(1)
-        self._window.bgcolor(BG_COLOR)
+        for i in range(10):
+            self._window.bgcolor(LOSE_COLOR)
+            time.sleep(0.1)
+            self._window.bgcolor(BG_COLOR)
+            time.sleep(0.1)
         self._snake.clear_body()
         self._snake.spawn()
         self._food.spawn()
