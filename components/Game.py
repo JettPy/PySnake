@@ -1,9 +1,8 @@
-import sys
 import time
 import turtle
 from components.Snake import Snake
 from components.Food import Food
-
+from utils.constants import *
 
 class Game:
 
@@ -28,8 +27,8 @@ class Game:
         else:
             self._font_size = 9
         self._window = turtle.Screen()
-        self._window.title('PySnake')
-        self._window.bgcolor('honeydew')
+        self._window.title(TITLE)
+        self._window.bgcolor(BG_COLOR)
         self._window.setup(width = self._size * 20 + 50, height = self._size * 20 + 50)
         self._window.tracer(0)
 
@@ -43,7 +42,7 @@ class Game:
         self._score_board = turtle.Turtle()
         self._score_board.speed(0)
         self._score_board.shape('square')
-        self._score_board.color('black')
+        self._score_board.color(TEXT_COLOR)
         self._score_board.penup()
         self._score_board.hideturtle()
         self._score_board.goto(0, self._size * 10 - 20)
@@ -75,9 +74,9 @@ class Game:
         self._window.onkeypress(self._lose, 'r')
 
     def _lose(self):
-        self._window.bgcolor('orange')
+        self._window.bgcolor(LOSE_COLOR)
         time.sleep(1)
-        self._window.bgcolor('honeydew')
+        self._window.bgcolor(BG_COLOR)
         self._snake.clear_body()
         self._snake.spawn()
         self._food.spawn()
@@ -122,5 +121,5 @@ class Game:
         self._score_board.write(
             'score: {}  High score: {}'.format(self._score, self._high_score),
             align = 'center',
-            font = ('consolas', self._font_size, 'normal'),
+            font = (FONT_STYLE, self._font_size, 'normal'),
         )

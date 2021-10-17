@@ -1,6 +1,8 @@
 import turtle
 from random import randrange
 
+from utils.constants import *
+
 
 class Food:
 
@@ -11,8 +13,8 @@ class Food:
         self._size = size
         self._food = turtle.Turtle()
         self._food.speed(0)
-        self._food.shape('circle')
-        self._food.color('tomato')
+        self._food.shape(FOOD_SHAPE)
+        self._food.color(FOOD_COLOR)
         self._food.penup()
 
     def spawn(self):

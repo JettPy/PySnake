@@ -1,5 +1,6 @@
 import turtle
 
+from utils.constants import *
 
 class Snake:
 
@@ -11,8 +12,8 @@ class Snake:
         self._size = size
         self._head = turtle.Turtle()
         self._head.speed(0)
-        self._head.shape('square')
-        self._head.color('darkseagreen')
+        self._head.shape(SNAKE_SHAPE)
+        self._head.color(HEAD_COLOR)
         self._head.penup()
 
     def spawn(self):
@@ -63,8 +64,8 @@ class Snake:
     def add_segment_of_body(self):
         new_segment = turtle.Turtle()
         new_segment.speed(0)
-        new_segment.shape('square')
-        new_segment.color('palegreen')
+        new_segment.shape(SNAKE_SHAPE)
+        new_segment.color(BODY_COLOR)
         new_segment.penup()
         self._body.append(new_segment)
 
