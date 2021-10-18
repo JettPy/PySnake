@@ -29,7 +29,7 @@ class Game:
         self._window = turtle.Screen()
         self._window.title(TITLE)
         self._window.bgcolor(BG_COLOR)
-        self._window.setup(width = self._size * 20 + 40, height = self._size * 20 + 40,)
+        self._window.setup(self._size * 20, self._size * 20)
         self._window.setworldcoordinates(0, 0, self._size * 20, self._size * 20)
         self._window.tracer(0)
 
@@ -50,7 +50,7 @@ class Game:
 
     def _start(self):
         self._snake.spawn()
-        self._food.spawn()
+        self._food.spawn(self._snake.get_body_coordinates())
         self._bind_keys()
 
     def _exit(self):
@@ -79,7 +79,7 @@ class Game:
     def _clean_screen(self):
         self._snake.clear_body()
         self._snake.spawn()
-        self._food.spawn()
+        self._food.spawn(self._snake.get_body_coordinates())
         self._score = 0
         self._delay = 0.2
         self._score_board.clear()
@@ -103,7 +103,7 @@ class Game:
 
 
     def _get_score(self):
-        self._food.spawn()
+        self._food.spawn(self._snake.get_body_coordinates())
         self._snake.add_segment_of_body()
         self._delay -= 0.01
         self._score += 1

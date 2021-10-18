@@ -53,6 +53,13 @@ class Snake:
     def get_coordinates(self):
         return self._head.xcor(), self._head.ycor()
 
+    def get_body_coordinates(self):
+        coordinates =[]
+        coordinates.append((self._head.xcor(), self._head.ycor()))
+        for i in range(len(self._body)):
+            coordinates.append((self._body[i].xcor(), self._body[i].ycor()))
+        return coordinates
+
     def get_distance(self, x: int, y: int):
         return self._head.distance(x, y)
 
