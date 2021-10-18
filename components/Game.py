@@ -1,5 +1,6 @@
 import time
 import turtle
+from components.ScoreBoard import ScoreBoard
 from components.Snake import Snake
 from components.Food import Food
 from utils.constants import *
@@ -7,46 +8,24 @@ from utils.constants import *
 class Game:
 
     _size = None
-    _font_size = None
 
     _window = None
-    _score_board = None
     _snake = None
     _food = None
 
     _delay = 0.2
-    _score = 0
-    _high_score = 0
 
     def __init__(self, size : int):
         self._size = size
-        if size >= 20:
-            self._font_size = 24
-        elif size >= 12:
-            self._font_size = 12
-        else:
-            self._font_size = 9
         self._window = turtle.Screen()
         self._window.title(TITLE)
         self._window.bgcolor(BG_COLOR)
         self._window.setup(self._size * 20, self._size * 20)
         self._window.setworldcoordinates(0, 0, self._size * 20, self._size * 20)
         self._window.tracer(0)
-
         self._snake = Snake(self._size)
         self._food = Food(self._size)
-
-        self._create_score_board()
-        self._update_score_board()
-
-    def _create_score_board(self):
-        self._score_board = turtle.Turtle()
-        self._score_board.speed(0)
-        self._score_board.shape('square')
-        self._score_board.color(TEXT_COLOR)
-        self._score_board.penup()
-        self._score_board.hideturtle()
-        self._score_board.goto(self._size * 10, self._size * 20 - 40)
+        self._score_board = ScoreBoard(self._size)
 
     def _start(self):
         self._snake.spawn()
@@ -80,10 +59,8 @@ class Game:
         self._snake.clear_body()
         self._snake.spawn()
         self._food.spawn(self._snake.get_body_coordinates())
-        self._score = 0
         self._delay = 0.2
-        self._score_board.clear()
-        self._update_score_board()
+        self._score_board.clear_board()
 
     def _lose(self):
         for i in range(10):
@@ -106,11 +83,7 @@ class Game:
         self._food.spawn(self._snake.get_body_coordinates())
         self._snake.add_segment_of_body()
         self._delay -= 0.01
-        self._score += 1
-        if self._score > self._high_score:
-            self._high_score = self._score
-        self._score_board.clear()
-        self._update_score_board()
+        self._score_board.increase_score()
 
     def run(self):
         self._start()
@@ -128,16 +101,9 @@ class Game:
             food_x, food_y = self._food.get_coordinates()
             if self._snake.get_distance(food_x, food_y) < 20:
                 self._get_score()
-            if self._score == self._size ** 2:
+            if self._score_board.get_score() == self._size ** 2:
                 self._win()
             self._snake.move_snake()
             self._snake.move()
             time.sleep(self._delay)
         self._window.mainloop()
-
-    def _update_score_board(self):
-        self._score_board.write(
-            'score: {} High score: {}'.format(self._score, self._high_score),
-            align = 'center',
-            font = (FONT_STYLE, self._font_size, 'normal'),
-        )

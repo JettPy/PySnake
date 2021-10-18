@@ -10,8 +10,5 @@ except ValueError:
 if size <= 0:
     print('Invalid parameter. Starting in default mode')
     size = 30
-try:
-    py_snake = Game(size)
-    py_snake.run()
-except Exception:
-    pass
+py_snake = Game(size)
+py_snake.run()
