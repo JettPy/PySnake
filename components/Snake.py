@@ -17,7 +17,7 @@ class Snake:
         self._head.penup()
 
     def spawn(self):
-        self._head.goto(0, 0)
+        self._head.goto((self._size + 1) // 2 * 20 - 10, (self._size + 1) // 2 * 20 - 10)
         self._head.direction = 'stop'
 
     def go_up(self):
@@ -53,12 +53,19 @@ class Snake:
     def get_coordinates(self):
         return self._head.xcor(), self._head.ycor()
 
+    def get_body_coordinates(self):
+        coordinates =[]
+        coordinates.append((self._head.xcor(), self._head.ycor()))
+        for i in range(len(self._body)):
+            coordinates.append((self._body[i].xcor(), self._body[i].ycor()))
+        return coordinates
+
     def get_distance(self, x: int, y: int):
         return self._head.distance(x, y)
 
     def clear_body(self):
         for segment in self._body:
-            segment.goto(10000, 10000)
+            segment.goto(-100, -100)
         self._body.clear()
 
     def add_segment_of_body(self):

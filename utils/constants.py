@@ -2,6 +2,7 @@
 TITLE = 'PySnake'
 BG_COLOR = 'honeydew'
 LOSE_COLOR = 'orange'
+WIN_COLOR = 'lawngreen'
 SCORE_BOARD_SHAPE = 'square'
 TEXT_COLOR = 'black'
 FONT_STYLE = 'consolas'
