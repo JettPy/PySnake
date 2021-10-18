@@ -17,7 +17,7 @@ class Snake:
         self._head.penup()
 
     def spawn(self):
-        self._head.goto(0, 0)
+        self._head.goto((self._size + 1) // 2 * 20 - 10, (self._size + 1) // 2 * 20 - 10)
         self._head.direction = 'stop'
 
     def go_up(self):
@@ -58,7 +58,7 @@ class Snake:
 
     def clear_body(self):
         for segment in self._body:
-            segment.goto(10000, 10000)
+            segment.goto(-100, -100)
         self._body.clear()
 
     def add_segment_of_body(self):
