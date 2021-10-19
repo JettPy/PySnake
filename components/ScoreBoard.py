@@ -6,10 +6,10 @@ class ScoreBoard:
     _size = None
     _font_size = None
     _board = None
-    _score = 0
-    _high_score = 0
+    _score = None
+    _high_score = None
 
-    def __init__(self, size : int, mode : bool):
+    def __init__(self, size : int, is_dark : bool):
         self._size = size
         if size >= 20:
             self._font_size = 24
@@ -17,10 +17,12 @@ class ScoreBoard:
             self._font_size = 12
         else:
             self._font_size = 9
+        self._score = 0
+        self._high_score = 0
         self._board = turtle.Turtle()
         self._board.speed(0)
         self._board.shape('square')
-        if mode:
+        if is_dark:
             self._board.color(TEXT_COLOR_DARK)
         else:
             self._board.color(TEXT_COLOR)
