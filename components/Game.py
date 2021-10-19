@@ -8,24 +8,29 @@ from utils.constants import *
 class Game:
 
     _size = None
+    _mode = None
 
     _window = None
     _snake = None
     _food = None
 
-    _delay = 0.2
+    _delay = 0.1
 
-    def __init__(self, size : int):
+    def __init__(self, size : int, mode : bool):
         self._size = size
+        self._mode = mode
         self._window = turtle.Screen()
         self._window.title(TITLE)
-        self._window.bgcolor(BG_COLOR)
+        if mode:
+            self._window.bgcolor(BG_COLOR_DARK)
+        else:
+            self._window.bgcolor(BG_COLOR)
         self._window.setup(self._size * 20, self._size * 20)
         self._window.setworldcoordinates(0, 0, self._size * 20, self._size * 20)
         self._window.tracer(0)
-        self._snake = Snake(self._size)
-        self._food = Food(self._size)
-        self._score_board = ScoreBoard(self._size)
+        self._snake = Snake(self._size, mode)
+        self._food = Food(self._size, mode)
+        self._score_board = ScoreBoard(self._size, mode)
 
     def _start(self):
         self._snake.spawn()
@@ -59,14 +64,17 @@ class Game:
         self._snake.clear_body()
         self._snake.spawn()
         self._food.spawn(self._snake.get_body_coordinates())
-        self._delay = 0.2
+        self._delay = 0.1
         self._score_board.clear_board()
 
     def _lose(self):
         for i in range(10):
             self._window.bgcolor(LOSE_COLOR)
             time.sleep(0.1)
-            self._window.bgcolor(BG_COLOR)
+            if self._mode:
+                self._window.bgcolor(BG_COLOR_DARK)
+            else:
+                self._window.bgcolor(BG_COLOR)
             time.sleep(0.1)
         self._clean_screen()
 
@@ -74,7 +82,10 @@ class Game:
         for i in range(10):
             self._window.bgcolor(WIN_COLOR)
             time.sleep(0.1)
-            self._window.bgcolor(BG_COLOR)
+            if self._mode:
+                self._window.bgcolor(BG_COLOR_DARK)
+            else:
+                self._window.bgcolor(BG_COLOR)
             time.sleep(0.1)
         self._clean_screen()
 
@@ -82,7 +93,7 @@ class Game:
     def _get_score(self):
         self._food.spawn(self._snake.get_body_coordinates())
         self._snake.add_segment_of_body()
-        self._delay -= 0.01
+        self._delay -= 0.005
         self._score_board.increase_score()
 
     def run(self):

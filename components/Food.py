@@ -9,12 +9,15 @@ class Food:
     _size = None
     _food = None
 
-    def __init__(self, size : int):
+    def __init__(self, size : int, mode : bool):
         self._size = size
         self._food = turtle.Turtle()
         self._food.speed(0)
         self._food.shape(FOOD_SHAPE)
-        self._food.color(FOOD_COLOR)
+        if mode:
+            self._food.color(FOOD_COLOR_DARK)
+        else:
+            self._food.color(FOOD_COLOR)
         self._food.penup()
 
     def spawn(self, coordinates : list):
