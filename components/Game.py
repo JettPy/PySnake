@@ -10,6 +10,7 @@ class Game:
     _size = None
     _is_loop = None
     _is_dark = None
+    _is_god = None
 
     _is_pause = None
 
@@ -19,9 +20,13 @@ class Game:
 
     _delay = None
 
-    def __init__(self, size : int, is_loop : bool, is_dark : bool):
+    def __init__(self, size : int, is_loop : bool, is_dark : bool, is_god : bool):
         self._size = size
-        self._is_loop = is_loop
+        self._is_god = is_god
+        if is_god:
+            self._is_loop = True
+        else:
+            self._is_loop = is_loop
         self._is_dark = is_dark
         self._delay = 0.1
         self._is_pause = False
@@ -34,7 +39,7 @@ class Game:
         self._window.setup(self._size * 20, self._size * 20)
         self._window.setworldcoordinates(0, 0, self._size * 20, self._size * 20)
         self._window.tracer(0)
-        self._snake = Snake(self._size, is_loop, is_dark)
+        self._snake = Snake(self._size, self._is_loop, is_dark)
         self._food = Food(self._size, is_dark)
         self._score_board = ScoreBoard(self._size, is_dark)
 
@@ -139,12 +144,14 @@ class Game:
             snake_x_pos, snake_y_pos = self._snake.get_coordinates()
             if (
                 (
-                    snake_x_pos > self._size * 20
-                    or snake_x_pos < 0
-                    or snake_y_pos > self._size * 20
-                    or snake_y_pos < 0
-                ) and not self._is_loop
-                or self._snake.check_collision()
+                    (
+                        snake_x_pos > self._size * 20
+                        or snake_x_pos < 0
+                        or snake_y_pos > self._size * 20
+                        or snake_y_pos < 0
+                    ) and not self._is_loop
+                    or self._snake.check_collision()
+                ) and not self._is_god
             ):
                 self._lose()
             food_x, food_y = self._food.get_coordinates()
