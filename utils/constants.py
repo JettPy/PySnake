@@ -20,3 +20,9 @@ SNAKE_SHAPE = 'square'
 FOOD_COLOR = 'tomato'
 FOOD_COLOR_DARK = 'dodgerblue'
 FOOD_SHAPE = 'circle'
+
+# Pause settings
+BG_COLOR_PAUSE = 'lightgray'
+HEAD_COLOR_PAUSE = 'dimgray'
+BODY_COLOR_PAUSE = 'darkgray'
+FOOD_COLOR_PAUSE = 'gray'

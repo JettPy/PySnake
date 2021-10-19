@@ -12,15 +12,19 @@ if size <= 0:
     size = 30
 
 dark_mode = False
+loop_mode = False
 
-if len(sys.argv) == 3:
-    if sys.argv[2] == 'd':
-        dark_mode = True
-    else:
-        print('Invalid parametr. Use \"d\" for dark mode')
+if len(sys.argv) > 2:
+    for i in range(2, len(sys.argv)):
+        if sys.argv[i] == 'd':
+            dark_mode = True
+        elif sys.argv[i] == 'i':
+            loop_mode = True
+        else:
+            print('Invalid parametr. Use \"d\" for dark mode or \"i\" for loop mode')
 
 try:
-    py_snake = Game(size, dark_mode)
+    py_snake = Game(size, loop_mode, dark_mode)
     py_snake.run()
 except Exception:
     pass
