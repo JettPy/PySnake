@@ -5,15 +5,20 @@ from utils.constants import *
 class Snake:
 
     _size = None
+    _mode = None
     _head = None
     _body = []
 
-    def __init__(self, size : int):
+    def __init__(self, size : int, mode : bool):
         self._size = size
+        self._mode = mode
         self._head = turtle.Turtle()
         self._head.speed(0)
         self._head.shape(SNAKE_SHAPE)
-        self._head.color(HEAD_COLOR)
+        if mode:
+            self._head.color(HEAD_COLOR_DARK)
+        else:
+            self._head.color(HEAD_COLOR)
         self._head.penup()
 
     def spawn(self):
@@ -72,7 +77,10 @@ class Snake:
         new_segment = turtle.Turtle()
         new_segment.speed(0)
         new_segment.shape(SNAKE_SHAPE)
-        new_segment.color(BODY_COLOR)
+        if self._mode:
+            new_segment.color(BODY_COLOR_DARK)
+        else:
+            new_segment.color(BODY_COLOR)
         new_segment.penup()
         self._body.append(new_segment)
 
