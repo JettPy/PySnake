@@ -1,5 +1,6 @@
 import time
 import turtle
+from components.Message import Message
 from components.ScoreBoard import ScoreBoard
 from components.Snake import Snake
 from components.Food import Food
@@ -15,6 +16,7 @@ class Game:
     _is_pause = None
 
     _window = None
+    _message = None
     _snake = None
     _food = None
 
@@ -42,6 +44,7 @@ class Game:
         self._snake = Snake(self._size, self._is_loop, is_dark)
         self._food = Food(self._size, is_dark)
         self._score_board = ScoreBoard(self._size, is_dark)
+        self._message = Message(self._size, is_dark)
 
     def _start(self):
         self._snake.spawn()
@@ -67,7 +70,7 @@ class Game:
 
         self._window.onkeypress(self._exit, 'Escape')
 
-        self._window.onkeypress(self._lose, 'r')
+        self._window.onkeypress(self._restart, 'r')
 
         self._window.onkeypress(self._win, 'q')
 
@@ -81,7 +84,7 @@ class Game:
         self._food.spawn(self._snake.get_body_coordinates())
         self._score_board.clear_board()
 
-    def _lose(self):
+    def _restart(self):
         for i in range(10):
             self._window.bgcolor(LOSE_COLOR)
             time.sleep(0.1)
@@ -92,7 +95,13 @@ class Game:
             time.sleep(0.1)
         self._clean_screen()
 
+    def _lose(self):
+        self._message.write(False)
+        self._restart()
+        self._message.hide_message()
+
     def _win(self):
+        self._message.write(True)
         for i in range(10):
             self._window.bgcolor(WIN_COLOR)
             time.sleep(0.1)
@@ -102,6 +111,7 @@ class Game:
                 self._window.bgcolor(BG_COLOR)
             time.sleep(0.1)
         self._clean_screen()
+        self._message.hide_message()
 
     def _cheat(self):
         x, y = self._snake.get_coordinates()
@@ -117,6 +127,10 @@ class Game:
 
     def _pause(self):
         self._is_pause = not self._is_pause
+        if self._is_pause:
+            self._message.write(False, True)
+        else:
+            self._message.hide_message()
         self._game_pause()
         self._snake.pause(self._is_pause)
         self._food.pause(self._is_pause)
